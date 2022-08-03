@@ -1,0 +1,18 @@
+{
+  "clientes": [
+    {
+      "nombre": "Juan",
+      "email": "correo2@correo.com",
+      "telefono": "666987712",
+      "empresa": "Man Seg",
+      "id": 1
+    },
+    {
+      "nombre": "Pedro",
+      "email": "correo@correo.com",
+      "telefono": "634434421",
+      "empresa": "Pergal",
+      "id": 2
+    }
+  ]
+}
