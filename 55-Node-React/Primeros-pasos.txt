@@ -1,0 +1,49 @@
+1 - npm init (Crea el proyecto junto a package.json)
+2 - npm i express (Instala express para revisar lo que vamos subiendo)
+3 - npm install --save-dev nodemon (Prepara el servidor para que se reinicie cada vez que hagamos cambios)
+4 - Crear index.js y configurarlo:
+
+    import express from 'express';
+    import router from './routes/index.js';
+
+    const app = express();
+
+    //Definir puerto
+    const port = process.env.PORT || 4000;
+    
+    //Habilitar pug
+    app.set('view engine','pug');
+
+    // Agregar Router
+    app.use('/',router);
+
+    app.listen (port,() =>{
+    console.log (`El servidor funciona correctamente en el puerto ${port}`)
+    })
+
+5 - En package.json, borrar la linea de "tests" y escribir en la parte de scripts:
+    "scripts": {
+    "dev": "nodemon index.js"
+    },
+    "type": "module",
+6- Abrir terminal y escribir:
+    npm run dev
+7- Crear la carpeta routes y crear el index.js con las paginas que queremos crear:
+    import express, { Router } from 'express';
+
+    const router = express.Router();
+
+    router.get('/',(req,res)=>{ // req- lo que enviamos; res- lo que express responde
+    res.send('Inicio');
+    });
+router.get('/nosotros',(req,res)=>{
+    res.render('nosotros');
+    });
+
+    export default router;
+
+8- En terminal cerrar la conexion al servidor (Ctrl+c) y poner:
+    npm install pug
+    npm run dev
+
+9- Crea la carpeta views y los archivos son .pug
