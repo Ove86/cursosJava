@@ -1,0 +1,15 @@
+1- Instalar React (con Vite) y seguir pasos: 
+    npm create vite@latest  
+2- Para arrancar el proyecto: 
+    npm run dev
+3- Eliminar app.css de SRC
+4- Instalar tailwind:
+    npm install -D tailwindcss postcss autoprefixer
+    npx tailwindcss init -p
+5- Indicar en tailwind.config.cjs los archivos que vamos a utilizar tailwind. Para ello en content colocamos esto:
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}"
+6- Abrir index.css y colocar:
+    @tailwind base;
+    @tailwind components;
+    @tailwind utilities;
