@@ -13,3 +13,7 @@
     @tailwind base;
     @tailwind components;
     @tailwind utilities;
+7- Crear carpeta components en src
+8- Para subir a un servidor pones en terminal:
+    npm run build
+    Crea una carpeta que es la que tienes que subir al servidor
