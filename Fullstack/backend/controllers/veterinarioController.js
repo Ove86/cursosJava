@@ -1,3 +1,4 @@
+import generarJWT from '../helpers/generarJWT.js';
 import Veterinario from '../models/Veterinario.js';
 
 
@@ -31,7 +32,7 @@ const confirmar = async (req,res)=>{
     const usuarioConfirmar = await Veterinario.findOne({token});
     if(!usuarioConfirmar){
         const error = new Error ('Token no válido')
-        return resizeTo.status(404).json({msg: error.message});
+        return res.status(404).json({msg: error.message});
     }
     try {
         usuarioConfirmar.token=null;
@@ -41,7 +42,29 @@ const confirmar = async (req,res)=>{
     } catch (error) {
         console.log(error)
     }
+};
 
-}
+const autenticar = async (req,res) => {
+    const {email,password} = req.body;
+    // Comprobar si existe el usuario
+    const usuario = await Veterinario.findOne({email})
+    if(!autenticar){
+        const error = new Error ('El usuario no existe');
+        return res.status(403).json({msg: error.message});
+    }
+    // Comprobar si el usuario está confirmado
+    if(!usuario.confirmado){
+        const error = new Error ('Tu cuenta no está confirmada');
+        return res.status(403).json({msg: error.message});
+    }
+    // Revisar el password
+    if(await usuario.comprobarPassword(password)){
+        //Autenticar
+        res.json({token:generarJWT(usuario.id)});
+    }else{
+        const error = new Error ('El password es incorrecto');
+        return res.status(403).json({msg: error.message});
+    }
+};
 
-export {registrar, perfil, confirmar};
+export {registrar, perfil, confirmar, autenticar};
