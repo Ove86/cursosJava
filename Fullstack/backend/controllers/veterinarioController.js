@@ -1,11 +1,13 @@
 import generarId from '../helpers/generarId.js';
 import generarJWT from '../helpers/generarJWT.js';
 import Veterinario from '../models/Veterinario.js';
+import emailRegistro from '../helpers/emailRegistro.js';
+import emailOlvidePassword from '../helpers/emailOlvidePassword.js';
 
 
 const registrar = async (req,res)=>{
     //Prevenir usuarios duplicados
-    const {email} = req.body;
+    const {email, nombre} = req.body;
     const existeUsuario = await Veterinario.findOne({email})
 
     if (existeUsuario){
@@ -17,6 +19,13 @@ const registrar = async (req,res)=>{
         // Guardar un nuevo Veterinario
         const veterinario = new Veterinario(req.body);
         const veterinarioGuardado = await veterinario.save();
+
+        //Enviar el mail de registro
+        emailRegistro({
+            email,
+            nombre,
+            token: veterinarioGuardado.token
+        });
         
         res.json(veterinarioGuardado);
     } catch (error) {
@@ -80,6 +89,14 @@ const olvidePassword = async (req, res) => {
     try {
         existeVeterinario.token = generarId();
         await existeVeterinario.save()
+
+        //Enviar Email con instrucciones
+        olvidePassword({
+            email,
+            nombre: existeVeterinario.nombre,
+            token: existeVeterinario.token
+        });
+
         res.json({msg:'Hemos olvidado un email con las instrucciones.'});
     } catch (error) {
         console.log (error);
