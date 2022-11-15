@@ -30,4 +30,4 @@ const emailRegistro = async (datos)=>{
 };
 
 
-export default emailOlvidePassword;
+export default emailRegistro;

@@ -88,10 +88,10 @@ const olvidePassword = async (req, res) => {
     }
     try {
         existeVeterinario.token = generarId();
-        await existeVeterinario.save()
+        await existeVeterinario.save();
 
         //Enviar Email con instrucciones
-        olvidePassword({
+        emailOlvidePassword({
             email,
             nombre: existeVeterinario.nombre,
             token: existeVeterinario.token
