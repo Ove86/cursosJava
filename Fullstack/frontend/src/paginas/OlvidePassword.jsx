@@ -5,14 +5,25 @@ import Alerta from '../components/Alerta';
 
 const OlvidePassword = () => {
   const [email,setEmail] = useState('');
-  const [alerta,setAlerta] =
+  const [alerta,setAlerta] = useState({});
 
 
   const handleSubmit = async ()=> {
     e.preventDefault()
-    if(email ===""){
+    if(email ==='' || email.length < 6){
       setAlerta({msg:'El Email es obligatorio', error: true})
       return
+    }
+
+    try {
+      const {data} = await clienteAxios.post('/veterinarios/olvide-password',{email})
+      setAlerta({msg:data.msg})
+      
+    } catch (error) {
+      setAlerta({
+        msg: error.response.data.msg,
+        error:true
+      })
     }
   }
   const {msg} = alerta
